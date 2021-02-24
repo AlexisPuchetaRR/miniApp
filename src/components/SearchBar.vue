@@ -43,7 +43,7 @@
 </template>
 
 <script>
-const axios = require('axios');
+import { mapActions } from 'vuex';
 export default {
   name: "SearchBar",
   data() {
@@ -52,13 +52,12 @@ export default {
     };
   },
   created() {
-    
   },
   methods: {
+    ...mapActions(['getDataActions']),
     async save() {
-      console.log(this.search);
-      const response = await axios.get(`https://api.mercadolibre.com/sites/MLA/search?q=${this.search}`);
-      console.log(response);
+      this.getDataActions(this.search);
+      return this.$store.state.data
     },
   },
 };
