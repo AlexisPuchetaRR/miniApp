@@ -56,8 +56,9 @@ export default {
   methods: {
     ...mapActions(['getDataActions']),
     async save() {
-      this.getDataActions(this.search);
-      return this.$store.state.data
+      await this.getDataActions(this.search);
+      this.$router.push("/").catch(()=>{});
+      return this.$store.state.data;
     },
   },
 };
