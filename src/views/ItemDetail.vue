@@ -1,18 +1,32 @@
 <template>
   <div>
     <SearchBar />
-    <div class="flex flex-col">
-      <div class="flex flex-row">
-        <div v-if="!loading_img & !loading_desc">
-          <div v-if="item.thumbnail">
-            <img :src="item.thumbnail" width="420"/>
+    <div class="bg-gray-200 w-full h-full min-h-screen">
+      <div class="px-12 py-8 bg-gray-200">
+        <div class="flex flex-col bg-white pt-5">
+          <div class="flex flex-row justify-between">
+            <div v-if="!loading_img & !loading_desc">
+              <div v-if="item.thumbnail">
+                <img :src="item.thumbnail" width="360" />
+              </div>
+            </div>
+            <div class="flex flex-col w-2/4 pr-36">
+              <h2 class="text-xs" v-if="item.condition === 'new'">Nuevo - {{item.sold_quantity}} vendidos</h2>
+              <h2 class="text-lg" v-if="item.title">{{ item.title }}</h2>
+              <h2 v-else>Loading....</h2>
+              <h3 class="text-3xl pb-10">{{ formatUSD() }}</h3>
+              <button @click="buy(item.title)"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+              >
+                Comprar
+              </button>
+            </div>
           </div>
-          <p v-if="item.title">{{ item.title }}</p>
-          <p v-else>Loading....</p>
-        </div>
-        <div>
-          <h1 v-if="item.desc.plain_text">{{ item.desc.plain_text }}</h1>
-          <p v-else>Loading....</p>
+          <div class="w-3/4 px-10 py-6">
+            <h2 class="font-bold">Descripcion del producto</h2>
+            <h4 class="text-base opacity-50" v-if="item.desc.plain_text">{{ item.desc.plain_text }}</h4>
+            <p v-else>Loading....</p>
+          </div>
         </div>
       </div>
     </div>
@@ -51,6 +65,12 @@ export default {
       this.loading_desc = false;
       return;
     },
+    formatUSD() {
+      return "$" + Number(this.item.base_price).toLocaleString();
+    },
+    buy(title) {
+      return alert(title)
+    }
   },
   computed: mapState({
     item: (state) => state.item,
