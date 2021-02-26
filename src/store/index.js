@@ -1,15 +1,22 @@
 import axios from "axios";
 import Vue from "vue";
 import Vuex from "vuex";
-import { GET_DATA, GET_ITEM, GET_ITEM_DESCRIPTION } from "./mutation-types";
+import {
+  ADD_ITEM_CART,
+  GET_DATA,
+  GET_ITEM,
+  GET_ITEM_DESCRIPTION,
+} from "./mutation-types";
 
 Vue.use(Vuex);
 
 const state = () => ({
   data: [],
   item: {
-    desc: {}
+    desc: {},
   },
+  buy: {title:'', price:''},
+  buys: [],
 });
 
 const mutations = {
@@ -20,8 +27,13 @@ const mutations = {
     state.item = item;
   },
   [GET_ITEM_DESCRIPTION](state, description) {
-  state.item.desc = description
-  }
+    state.item.desc = description;
+  },
+  [ADD_ITEM_CART](state, item) {
+    Vue.set(state.buy, "title", item.title);
+    Vue.set(state.buy, "price", item.base_price);
+    state.buys.push(state.buy);
+  },
 };
 const actions = {
   async getDataActions({ commit }, payload) {
@@ -41,6 +53,9 @@ const actions = {
       `https://api.mercadolibre.com/items/${payload}/description`
     );
     commit(GET_ITEM_DESCRIPTION, response.data);
+  },
+  async addItemCartActions({ commit }, payload) {
+    commit(ADD_ITEM_CART, payload);
   },
 };
 

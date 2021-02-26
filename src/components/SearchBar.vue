@@ -1,6 +1,6 @@
 <template>
-  <div class="w-full">
-    <div class="bg-primary flex justify-center">
+  <div class="bg-primary flex flex-row justify-around items-center">
+    <div>
       <a href="/">
         <img
           src="../assets/logo.png"
@@ -9,44 +9,43 @@
           alt="Mercado libre logo"
           class="py-2"
       /></a>
-      <div class="py-4 flex flex-row">
-        <div class="flex items-center bg-white px-1 h-12">
-          <input
-            type="text"
-            placeholder=" Nunca dejes de buscar"
-            size="120"
-            name="search"
-            v-model="search"
-            v-on:keyup.enter="save()"
-          />
-          </div>
-          <div class="h-6">
-            <button @click="save()">
-              <svg
-                aria-hidden="true"
-                focusable="false"
-                data-prefix="fas"
-                data-icon="search"
-                class="svg-inline--fa fa-search fa-w-16 bg-gray-300 p-3"
-                role="img"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-              >
-                <path
-                  fill="gray"
-                  d="M505 442.7L405.3 343c-4.5-4.5-10.6-7-17-7H372c27.6-35.3 44-79.7 44-128C416 93.1 322.9 0 208 0S0 93.1 0 208s93.1 208 208 208c48.3 0 92.7-16.4 128-44v16.3c0 6.4 2.5 12.5 7 17l99.7 99.7c9.4 9.4 24.6 9.4 33.9 0l28.3-28.3c9.4-9.4 9.4-24.6.1-34zM208 336c-70.7 0-128-57.2-128-128 0-70.7 57.2-128 128-128 70.7 0 128 57.2 128 128 0 70.7-57.2 128-128 128z"
-                ></path>
-              </svg>
-            </button>
-          </div>
-        </div>
+    </div>
+    <div class="bg-white px-1 h-12 relative">
+      <input
+        type="text"
+        placeholder=" Nunca dejes de buscar"
+        size="120"
+        name="search"
+        v-model="search"
+        v-on:keyup.enter="save()"
+        class="py-3"
+      />
+      <div class="h-6 float-right p-2">
+        <button @click="save()">
+          <img src="../assets/lupa.png" width="30px"/>
+        </button>
       </div>
     </div>
-
+    <div
+      class="font-sans block mt-4 lg:idivne-block lg:mt-0 lg:ml-6 align-middle text-black hover:text-gray-700"
+    >
+      <a href="#" role="button" class="relative flex">
+        <svg class="flex-1 w-8 h-8 fill-current" viewbox="0 0 24 24">
+          <path
+            d="M17,18C15.89,18 15,18.89 15,20A2,2 0 0,0 17,22A2,2 0 0,0 19,20C19,18.89 18.1,18 17,18M1,2V4H3L6.6,11.59L5.24,14.04C5.09,14.32 5,14.65 5,15A2,2 0 0,0 7,17H19V15H7.42A0.25,0.25 0 0,1 7.17,14.75C7.17,14.7 7.18,14.66 7.2,14.63L8.1,13H15.55C16.3,13 16.96,12.58 17.3,11.97L20.88,5.5C20.95,5.34 21,5.17 21,5A1,1 0 0,0 20,4H5.21L4.27,2M7,18C5.89,18 5,18.89 5,20A2,2 0 0,0 7,22A2,2 0 0,0 9,20C9,18.89 8.1,18 7,18Z"
+          />
+        </svg>
+        <span
+          class="absolute right-0 top-0 rounded-full bg-red-600 w-4 h-4 top right p-0 m-0 text-white font-mono text-sm  leading-tight text-center"
+          >{{length(buys)}}
+        </span>
+      </a>
+    </div>
+  </div>
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions,mapState } from "vuex";
 export default {
   name: "SearchBar",
   data() {
@@ -62,6 +61,9 @@ export default {
       this.$router.push("/").catch(() => {});
       return this.$store.state.data;
     },
+    computed: mapState({
+    buys: (state) => state.buys,
+  }),
   },
 };
 </script>

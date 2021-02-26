@@ -15,7 +15,7 @@
               <h2 class="text-lg" v-if="item.title">{{ item.title }}</h2>
               <h2 v-else>Loading....</h2>
               <h3 class="text-3xl pb-10">{{ formatUSD() }}</h3>
-              <button @click="buy(item.title)"
+              <button @click="buy(item)"
                 class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
               >
                 Comprar
@@ -54,7 +54,7 @@ export default {
     await this.getItemDescriptionById(this.$route.params.id);
   },
   methods: {
-    ...mapActions(["getItemActions", "getItemDescriptionActions"]),
+    ...mapActions(["getItemActions", "getItemDescriptionActions","addItemCartActions"]),
     async getItemById(id) {
       await this.getItemActions(id);
       this.loading_img = false;
@@ -68,8 +68,10 @@ export default {
     formatUSD() {
       return "$" + Number(this.item.base_price).toLocaleString();
     },
-    buy(title) {
-      return alert(title)
+    buy(item) {
+      this.addItemCartActions(item)
+      let message = item.title + "\nAdded to cart";
+      return alert(message)
     }
   },
   computed: mapState({
