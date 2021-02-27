@@ -15,7 +15,7 @@ const state = () => ({
   item: {
     desc: {},
   },
-  buy: {title:'', price:''},
+  buy: {id:'', title:'', price:'', thumbnail:''},
   buys: [],
 });
 
@@ -30,8 +30,10 @@ const mutations = {
     state.item.desc = description;
   },
   [ADD_ITEM_CART](state, item) {
+    Vue.set(state.buy, "id", item.id);
     Vue.set(state.buy, "title", item.title);
     Vue.set(state.buy, "price", item.base_price);
+    Vue.set(state.buy, "thumbnail", item.thumbnail);
     state.buys.push(state.buy);
   },
 };
