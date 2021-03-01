@@ -16,9 +16,9 @@ const state = () => ({
   item: {
     desc: {},
   },
-  buy: {id:'', title:'', price:'', thumbnail:'', total: 0},
+  buy: {id:'', title:'', price:'', thumbnail:''},
   buys: [],
-  total:0,
+  total: 0,
 });
 
 const mutations = {
@@ -32,18 +32,19 @@ const mutations = {
     state.item.desc = description;
   },
   [ADD_ITEM_CART](state, item) {
-    Vue.set(state.buy, "id", item.id);
-    Vue.set(state.buy, "title", item.title);
-    Vue.set(state.buy, "price", item.base_price);
-    Vue.set(state.buy, "thumbnail", item.thumbnail);
-    let sum = item.base_price + state.total;
-    state.total = sum;
-    state.buys.push(state.buy);
+    let buy = {
+      id: item.id,
+      title: item.title,
+      price: item.base_price,
+      thumbnail: item.thumbnail,
+    };
+    state.total = buy.price + state.total;
+    state.buys.push(buy);
   },
   [DELETE_ITEM_CART](state, id) {
-    let index = state.buys.findIndex(buy => buy.id == id)
-    state.buys.splice(index, 1);
+    let index = state.buys.findIndex(buy => buy.id == id);
     state.total = state.total - state.buys[index].price;
+    state.buys.splice(index,1);
   }
 };
 const actions = {

@@ -105,7 +105,7 @@ export default {
       await this.deleteItemCartActions(id);
       let message = id + "\nDeleted to the cart";
       alert(message);
-      return this.$store.state.data;
+      return;
     },
     openModal() {
       this.open = !this.open;
