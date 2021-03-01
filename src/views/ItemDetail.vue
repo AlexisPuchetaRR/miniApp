@@ -24,7 +24,7 @@
           </div>
           <div class="w-3/4 px-10 py-6">
             <h2 class="font-bold">Descripcion del producto</h2>
-            <h4 class="text-base opacity-50" v-if="item.desc.plain_text">{{ item.desc.plain_text }}</h4>
+            <h4 class="text-base opacity-50" v-if="!loading_desc">{{ item.desc.plain_text }}</h4>
             <p v-else>Loading....</p>
           </div>
         </div>
@@ -56,11 +56,13 @@ export default {
   methods: {
     ...mapActions(["getItemActions", "getItemDescriptionActions","addItemCartActions"]),
     async getItemById(id) {
+      this.loading_img = true;
       await this.getItemActions(id);
       this.loading_img = false;
       return;
     },
     async getItemDescriptionById(id) {
+      this.loading_desc = true;
       await this.getItemDescriptionActions(id);
       this.loading_desc = false;
       return;
