@@ -1,13 +1,13 @@
 <template>
   <div class="card py-5 pr-12 flex flex-row">
     <div class="px-6">
-      <router-link :to="{ name: 'item-detail', params: { id: id }}">
+      <router-link :to="{ name: 'item-detail', params: { id: id } }">
         <img :src="img" width="160" height="160" />
       </router-link>
     </div>
     <div class="flex flex-col w-2/4">
       <div class="w-full">
-        <router-link :to="{ name: 'item-detail', params: { id: id }}">
+        <router-link :to="{ name: 'item-detail', params: { id: id } }">
           <h2>
             {{ title }}
           </h2>
@@ -70,7 +70,7 @@ export default {
     id: {
       type: String,
       default: () => {},
-    }
+    },
   },
   data() {
     return {

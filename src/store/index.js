@@ -3,6 +3,7 @@ import Vue from "vue";
 import Vuex from "vuex";
 import {
   ADD_ITEM_CART,
+  DELETE_ITEM_CART,
   GET_DATA,
   GET_ITEM,
   GET_ITEM_DESCRIPTION,
@@ -15,8 +16,9 @@ const state = () => ({
   item: {
     desc: {},
   },
-  buy: {id:'', title:'', price:'', thumbnail:''},
+  buy: {id:'', title:'', price:'', thumbnail:'', total: 0},
   buys: [],
+  total:0,
 });
 
 const mutations = {
@@ -34,8 +36,15 @@ const mutations = {
     Vue.set(state.buy, "title", item.title);
     Vue.set(state.buy, "price", item.base_price);
     Vue.set(state.buy, "thumbnail", item.thumbnail);
+    let sum = item.base_price + state.total;
+    state.total = sum;
     state.buys.push(state.buy);
   },
+  [DELETE_ITEM_CART](state, id) {
+    let index = state.buys.findIndex(buy => buy.id == id)
+    state.buys.splice(index, 1);
+    state.total = state.total - state.buys[index].price;
+  }
 };
 const actions = {
   async getDataActions({ commit }, payload) {
@@ -59,6 +68,9 @@ const actions = {
   async addItemCartActions({ commit }, payload) {
     commit(ADD_ITEM_CART, payload);
   },
+  async deleteItemCartActions({ commit }, payload) {
+    commit(DELETE_ITEM_CART, payload);
+  }
 };
 
 export default new Vuex.Store({

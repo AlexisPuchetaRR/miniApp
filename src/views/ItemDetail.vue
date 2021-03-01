@@ -71,7 +71,7 @@ export default {
     buy(item) {
       this.addItemCartActions(item)
       let message = item.title + "\nAdded to cart";
-      return alert(message)
+      return alert(message);
     }
   },
   computed: mapState({

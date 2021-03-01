@@ -1,14 +1,15 @@
 <template>
   <div class="bg-primary flex flex-row justify-around items-center">
     <div>
-      <a href="/">
+      <button @click="save()">
         <img
           src="../assets/logo.png"
           width="96px"
           height="32px"
           alt="Mercado libre logo"
           class="py-2"
-      /></a>
+      />
+      <i class="fa fa-trash" aria-hidden="true"></i></button>
     </div>
     <div class="bg-white px-1 h-12 relative">
       <input
